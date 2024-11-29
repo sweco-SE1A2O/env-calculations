@@ -1,0 +1,27 @@
+.p-text{
+}
+
+.sgu3help-container{
+    margin: 20px;
+    width: 40%;
+}
+
+.sgu3help-wrapper{
+    display:flex;
+}
+
+.example-text {
+    margin: 20px; /* Behåller marginaler runt elementet */
+    margin-left: auto; /* Skjuter det till höger */
+    width: 40%; /* Sätter en fast bredd */
+    background-color: #e6f3d4;
+    border: 3px solid #9dd354;
+    padding: 8px; /* Gör utrymmet mellan kant och text */
+    height: auto; /* Säkerställer att höjden anpassar sig till innehållet */
+    align-self: flex-start; /* Justerar höjden för flex-layout */
+}
+
+.example-title{
+    color: #9dd354;
+}
+

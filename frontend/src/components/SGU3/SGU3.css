@@ -1,0 +1,41 @@
+.form-control{
+    height: 1.5em;
+}
+    
+.modal-content {
+    max-height: 90vh; /* Sätter en maximal höjd på modalen (kan justeras) */
+    overflow-y: auto; /* Gör innehållet skrollbart om det blir för stort */
+}
+
+
+
+.btn{
+    border-radius: 0;
+    background-color: none;
+  }
+  
+  .btn-secondary{
+    background-color: white;
+  }
+
+.help-button{
+    margin-top: 20px;
+}
+
+.link-button{
+    margin-top: 20px;
+    margin-right: 8px;
+}
+
+.button-container{
+    margin-left: auto;
+}
+
+.radio-container{
+    display: flex;
+    margin-left: 40px;
+}
+
+.custom-radio{
+    margin-right: 10px;
+}
