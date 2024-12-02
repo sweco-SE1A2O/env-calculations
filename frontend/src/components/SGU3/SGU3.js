@@ -5,6 +5,8 @@ import equationImage from '../../assets/formler.png';
 import './SGU3.css';
 import { useNavigate } from 'react-router-dom';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 const SGU3 = () => {
     const today = new Date().toISOString().split('T')[0];
 
@@ -94,7 +96,7 @@ const SGU3 = () => {
       setLoading(true);
       try {
         // Skicka data till Flask-backend
-        const response = await fetch('http://localhost:5000/api/monte_carlo', {
+        const response = await fetch(`${API_URL}/api/monte_carlo`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -110,7 +112,7 @@ const SGU3 = () => {
         
         if(layout === 'avancerad') {
         // Anropa /api/monte_carlo_histogram för att få histogrammet
-        const histogramResponse = await fetch('http://localhost:5000/api/monte_carlo_histogram', {
+        const histogramResponse = await fetch(`${API_URL}/api/monte_carlo_histogram`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -129,7 +131,7 @@ const SGU3 = () => {
 
       if (layout === 'avancerad') {
         // Anropa /api/monte_carlo_plot för att få plot-bilden
-        const plotResponse = await fetch('http://localhost:5000/api/monte_carlo_plot', {
+        const plotResponse = await fetch(`${API_URL}/api/monte_carlo_plot`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -146,7 +148,7 @@ const SGU3 = () => {
       }
 
       if(layout === 'enkel') {
-        const medianPlotResponse = await fetch('http://localhost:5000/api/median_vs_avstand_plot', {
+        const medianPlotResponse = await fetch(`${API_URL}/api/median_vs_avstand_plot`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

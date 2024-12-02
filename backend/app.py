@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from calculations import monte_carlo_simulation, create_histogram, plot_avsankning_vs_avstand, plot_median_vs_avstand
@@ -130,4 +131,5 @@ def median_vs_avstand_plot():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.getenv("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
