@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import modelImage from '../../assets/modell.png';
+import modelImage from '../../assets/ritning2.png';
+import modelImageSummary from '../../assets/model_summary.png';
+import equationImage from '../../assets/formler.png';
 import './SGU3.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -294,7 +296,8 @@ const SGU3 = () => {
                 id="L"
                 style={{ width: '180px' }} // Bredd
               />
-                      <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Längd på schakt"></i>
+              <div className='unit'>[m]</div>
+                      <i style={{marginLeft: '4px', marginTop: '1px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Längd på schakt"></i>
             </div>
     
             <div className="form-group" style={{ marginBottom: '2px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -307,6 +310,7 @@ const SGU3 = () => {
                 id="hs"
                 style={{ width: '180px' }} // Bredd
               />
+              <div className='unit'>[m]</div>
               <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Vattenmättad mäktighet i schaktbotten (GVY ovan tät botten)"></i>
             </div>
     
@@ -321,6 +325,7 @@ const SGU3 = () => {
                 id="srp"
                 style={{ width: '180px' }} // Bredd
               />
+              <div className='unit'>[m]</div>
               <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Påverkansområdets avgränsning"></i>
             </div>
     
@@ -344,6 +349,7 @@ const SGU3 = () => {
                 id="H0Max"
                 style={{ width: '180px' }} // Bredd
               />
+              <div className='unit'>[m]</div>
               <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Opåverkad vattenmättad mäktighet på grundvattenmagasinet"></i>
             </div>
     
@@ -369,6 +375,7 @@ const SGU3 = () => {
                 id="KMax"
                 style={{ width: '180px' }} // Bredd
               />
+              <div className='unit'>[m/s]</div>
               <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Vattenmättad hydraulisk konduktivitet"></i>
             </div>
     
@@ -392,6 +399,7 @@ const SGU3 = () => {
                 id="WMax"
                 style={{ width: '180px' }} // Bredd
               />
+              <div className='unit'>[mm/år]</div>
               <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Grundvattenbildning"></i>
             </div>
             {/* Nedre percentil */}
@@ -408,6 +416,7 @@ const SGU3 = () => {
                 max="49"
                 style={{ width: '180px' }} // Bredd
               />
+              <div className='unit'>[%]</div>
                 <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Vald nedre percentil för statistik"></i>
             </div> )}
               
@@ -424,6 +433,7 @@ const SGU3 = () => {
                 max="99"
                 style={{ width: '180px' }} // Bredd
               />
+              <div className='unit'>[%]</div>
                           <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Vald övre percentil för statistik"></i>
             </div>
             )}
@@ -441,6 +451,7 @@ const SGU3 = () => {
             min="1" // Sätter ett minimum för iterationer
             style={{ width: '180px' }} // Bredd
           />
+          <div className='unit'>[st]</div>
                       <i style={{marginLeft: '4px'}} className="fa-thin fa-circle-info" data-toggle="tooltip" data-placement="top" title="Antal beräkningar i Monte Carlo-simuleringen"></i>
         </div>
       )}
@@ -507,14 +518,64 @@ const SGU3 = () => {
           </div> )}
 
           {medianPlotImage && !loading && layout === 'enkel' && (
-              <div style={{ textAlign: 'left', cursor: 'pointer' }} onClick={() => handleImageClick(medianPlotImage)}>
-                <img
-                  src={`data:image/png;base64,${medianPlotImage}`}
-                  alt="Median Plot"
-                  style={{ maxWidth: '100%', height: 'auto' }} // Anpassa efter layout
-                />
-              </div>
-            )} 
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    {/* Översta raden: Tabell och bild */}
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
+      {/* Tabellsektionen (vänster) */}
+      <div style={{ flex: 1, maxWidth: '50%' }}>
+        <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+          <tbody>
+            <tr>
+              <td style={{ padding: '8px' }}>Påverkansavstånd</td>
+              <td style={{ padding: '8px' }}>{results?.paverkanavstand?.median.toFixed(1)}</td>
+              <td style={{ padding: '8px' }}>[m]</td>
+            </tr>
+            <tr>
+              <td style={{ padding: '8px' }}>Influensavstånd</td>
+              <td style={{ padding: '8px' }}>{results?.influensavstand?.median.toFixed(1)}</td>
+              <td style={{ padding: '8px' }}>[m/s]</td>
+            </tr>
+            <tr>
+              <td style={{ padding: '8px' }}>Ensidigt inflöde</td>
+              <td style={{ padding: '8px' }}>
+                {results?.ensidigt_inflode?.median < 0.1
+                  ? results?.ensidigt_inflode?.median.toExponential(1)
+                  : results?.ensidigt_inflode?.median.toFixed(1)}
+              </td>
+              <td style={{ padding: '8px' }}>[m<sup>3</sup>/s]</td>
+            </tr>
+            <tr className='bordered-tr'>
+              <td style={{ padding: '8px' }}>Påverkansavstånd med säkerhetsfaktor </td>
+              <td style={{ padding: '8px' }}>{(results?.paverkanavstand?.median * sakerhetsfaktor).toFixed(1)}</td>
+              <td style={{ padding: '8px' }}>[m/s]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {/* Bildsektionen (höger) */}
+      <div style={{ flex: 1, maxWidth: '50%', textAlign: 'left', cursor: 'pointer' }} onClick={() => handleImageClick(medianPlotImage)}>
+        <img
+          src={`data:image/png;base64,${medianPlotImage}`}
+          alt="Median Plot"
+          style={{ maxWidth: '100%', height: 'auto' }} // Anpassar bredden automatiskt
+        />
+      </div>
+    </div>
+
+    {/* Knappsektionen */}
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <button onClick={handleModalOpen} type="submit" className="btn btn-secondary">
+        Summering
+      </button>
+    </div>
+  </div>
+)}
+
+
+
+
+
           {results && !loading && layout === 'avancerad' &&(
     <div style={{ marginTop: '20px' }}>
       {results.error ? (
@@ -533,52 +594,52 @@ const SGU3 = () => {
             <tbody>
               <tr>
                 <th scope="row" style={{ padding: '8px' }}>Min</th>
-                <td style={{ padding: '8px' }}>{results.paverkanavstand.min.toFixed(1)}</td>
-                <td style={{ padding: '8px' }}>{results.influensavstand.min.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.paverkanavstand?.min.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.influensavstand?.min.toFixed(1)}</td>
                 <td style={{ padding: '8px' }}>
-                  {results.ensidigt_inflode.min < 0.1
-                    ? results.ensidigt_inflode.min.toExponential(1)
-                    : results.ensidigt_inflode.min.toFixed(1)}
+                  {results?.ensidigt_inflode?.min < 0.1
+                    ? results?.ensidigt_inflode?.min.toExponential(1)
+                    : results?.ensidigt_inflode?.min.toFixed(1)}
                 </td>
               </tr>
               <tr>
                 <th scope="row" style={{ padding: '8px' }}>{lowerPercentile}-perc</th>
-                <td style={{ padding: '8px' }}>{results.paverkanavstand.lower_percentile.toFixed(1)}</td>
-                <td style={{ padding: '8px' }}>{results.influensavstand.lower_percentile.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.paverkanavstand?.lower_percentile.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.influensavstand?.lower_percentile.toFixed(1)}</td>
                 <td style={{ padding: '8px' }}>
-                  {results.ensidigt_inflode.lower_percentile < 0.1
-                    ? results.ensidigt_inflode.lower_percentile.toExponential(1)
-                    : results.ensidigt_inflode.lower_percentile.toFixed(1)}
+                  {results?.ensidigt_inflode?.lower_percentile < 0.1
+                    ? results?.ensidigt_inflode?.lower_percentile.toExponential(1)
+                    : results?.ensidigt_inflode?.lower_percentile.toFixed(1)}
                 </td>
               </tr>
               <tr>
                 <th scope="row" style={{ padding: '8px' }}>Median</th>
-                <td style={{ padding: '8px' }}>{results.paverkanavstand.median.toFixed(1)}</td>
-                <td style={{ padding: '8px' }}>{results.influensavstand.median.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.paverkanavstand?.median.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.influensavstand?.median.toFixed(1)}</td>
                 <td style={{ padding: '8px' }}>
-                  {results.ensidigt_inflode.median < 0.1
-                    ? results.ensidigt_inflode.median.toExponential(1)
-                    : results.ensidigt_inflode.median.toFixed(1)}
+                  {results?.ensidigt_inflode?.median < 0.1
+                    ? results?.ensidigt_inflode?.median.toExponential(1)
+                    : results?.ensidigt_inflode?.median.toFixed(1)}
                 </td>
               </tr>
               <tr>
                 <th scope="row" style={{ padding: '8px' }}>{upperPercentile}-perc</th>
-                <td style={{ padding: '8px' }}>{results.paverkanavstand.upper_percentile.toFixed(1)}</td>
-                <td style={{ padding: '8px' }}>{results.influensavstand.upper_percentile.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.paverkanavstand?.upper_percentile.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.influensavstand?.upper_percentile.toFixed(1)}</td>
                 <td style={{ padding: '8px' }}>
-                  {results.ensidigt_inflode.upper_percentile < 0.1
-                    ? results.ensidigt_inflode.upper_percentile.toExponential(1)
-                    : results.ensidigt_inflode.upper_percentile.toFixed(1)}
+                  {results?.ensidigt_inflode?.upper_percentile < 0.1
+                    ? results?.ensidigt_inflode?.upper_percentile.toExponential(1)
+                    : results?.ensidigt_inflode?.upper_percentile.toFixed(1)}
                 </td>
               </tr>
               <tr>
                 <th scope="row" style={{ padding: '8px' }}>Max</th>
-                <td style={{ padding: '8px' }}>{results.paverkanavstand.max.toFixed(1)}</td>
-                <td style={{ padding: '8px' }}>{results.influensavstand.max.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.paverkanavstand?.max.toFixed(1)}</td>
+                <td style={{ padding: '8px' }}>{results?.influensavstand?.max.toFixed(1)}</td>
                 <td style={{ padding: '8px' }}>
-                  {results.ensidigt_inflode.max < 0.1
-                    ? results.ensidigt_inflode.max.toExponential(1)
-                    : results.ensidigt_inflode.max.toFixed(1)}
+                  {results?.ensidigt_inflode?.max < 0.1
+                    ? results?.ensidigt_inflode?.max.toExponential(1)
+                    : results?.ensidigt_inflode?.max.toFixed(1)}
                 </td>
               </tr>
             </tbody>
@@ -604,14 +665,25 @@ const SGU3 = () => {
         <div style={{ flex: 1, backgroundColor: 'white', padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid red' }}>
         <h2>Modell</h2>
         <img src={modelImage} alt="Modell för uträkningarna" style={{ maxWidth: '100%', height: 'auto' }} />
-        <div className='button-container'>
+        {layout === 'avancerad' && (
+        <img src={equationImage} alt="Modell för uträkningarna" style={{ maxWidth: '100%', height: 'auto', marginTop: '8px'}} />
+        )}
+        <div
+  className="button-container"
+  style={{
+    display: 'flex',
+    justifyContent: 'space-between', // Justera mellanrummet mellan knappar
+    alignItems: 'center', // Vertikal centrering (om det behövs)
+    marginTop: 'auto', // Flytta knapparna längst ner i parent element
+  }}
+>
         <button type="button" className="btn btn-secondary link-button" onClick={() => window.open('https://www.sgu.se/anvandarstod-for-geologiska-fragor/bedomning-av-influensomrade-avseende-grundvatten/berakningsmodeller/analytiska-modeller/modell-3/', '_blank')}>Länk SGU</button>
         <button type="button" className="btn btn-primary help-button" onClick={handleHelp}>Hjälp</button>
         </div>
         </div>
-
-        <div className={`modal fade ${isModalOpen ? 'show' : ''}`} id="standardModal" role="dialog" aria-labelledby="standardModalLabel" aria-modal="true" style={{ display: isModalOpen ? 'block' : 'none' }}>
+      <div className={`modal fade ${isModalOpen ? 'show' : ''}`} id="standardModal" role="dialog" aria-labelledby="standardModalLabel" aria-modal="true" style={{ display: isModalOpen ? 'block' : 'none' }}>
     <div className="modal-dialog" role="document" style={{maxWidth: '70%'}}>
+      {layout === 'avancerad' && (
       <div className="modal-content">
         <div className="modal-header">
           <h4 className="modal-title" id="standardModalLabel">Summering</h4>
@@ -632,6 +704,9 @@ const SGU3 = () => {
               <label htmlFor="L" style={{ marginBottom: '0px' }}><b>Datum:</b></label>
               <div style={{ display: 'inline-block', marginLeft: '10px'  }}>{today}</div>
             </div>
+
+                        <img src={modelImageSummary} alt="Modell för uträkningarna" style={{ maxWidth: '70%', height: 'auto', marginTop: '20px', marginBottom: '20px' }} />
+
             <div style={{ flexDirection: 'column', marginBottom: '0px' }}>
               <label htmlFor="L" style={{ marginBottom: '0px' }}><b>L:</b></label>
               <div style={{ display: 'inline-block', marginLeft: '10px'  }}>{L} m</div>
@@ -796,6 +871,77 @@ const SGU3 = () => {
           <button type="button" className="btn btn-primary" onClick={handlePrint}>Skriv ut</button>
         </div>
       </div>
+      )}
+      {layout === 'enkel' && (
+      <div className="modal-content">
+        <div className="modal-header">
+          <h4 className="modal-title" id="standardModalLabel">Summering</h4>
+          <button type="button" className="close" onClick={handleModalClose} aria-label="Close"><span>Close</span></button>
+        </div>
+        <div className="modal-body">
+          <div className="dialog">
+            <div className="dialog-body" style={{ textAlign: 'left' }}>
+            <div style={{ flexDirection: 'column', marginBottom: '0px' }}>
+              <label htmlFor="Projekt" style={{ marginBottom: '0px' }}><b>Projekt:</b></label>
+              <div style={{ display: 'inline-block', marginLeft: '10px'  }}>{projekt}</div>
+            </div>
+            <div style={{ flexDirection: 'column', marginBottom: '0px' }}>
+              <label htmlFor="Projektinformation" style={{ marginBottom: '0px' }}><b>Projektinformation:</b></label>
+              <div style={{ display: 'inline-block', marginLeft: '10px'  }}>{projektInformation}</div>
+            </div>
+            <div style={{ flexDirection: 'column', marginBottom: '10px' }}>
+              <label htmlFor="L" style={{ marginBottom: '0px' }}><b>Datum:</b></label>
+              <div style={{ display: 'inline-block', marginLeft: '10px'  }}>{today}</div>
+            </div>
+
+            <img src={modelImageSummary} alt="Modell för uträkningarna" style={{ maxWidth: '70%', height: 'auto', marginTop: '20px', marginBottom: '20px' }} />
+
+            <table style={{ borderCollapse: 'collapse', width: '50%' }}>
+          <tbody>
+            <tr>
+              <td style={{ padding: '8px' }}>Påverkansavstånd</td>
+              <td style={{ padding: '8px' }}>{results?.paverkanavstand?.median.toFixed(1)}</td>
+              <td style={{ padding: '8px' }}>[m]</td>
+            </tr>
+            <tr>
+              <td style={{ padding: '8px' }}>Influensavstånd</td>
+              <td style={{ padding: '8px' }}>{results?.influensavstand?.median.toFixed(1)}</td>
+              <td style={{ padding: '8px' }}>[m/s]</td>
+            </tr>
+            <tr>
+              <td style={{ padding: '8px' }}>Ensidigt inflöde</td>
+              <td style={{ padding: '8px' }}>
+                {results?.ensidigt_inflode?.median < 0.1
+                  ? results?.ensidigt_inflode?.median.toExponential(1)
+                  : results?.ensidigt_inflode?.median.toFixed(1)}
+              </td>
+              <td style={{ padding: '8px' }}>[m<sup>3</sup>/s]</td>
+            </tr>
+            <tr className='bordered-tr'>
+              <td style={{ padding: '8px' }}>Påverkansavstånd med säkerhetsfaktor </td>
+              <td style={{ padding: '8px' }}>{(results?.paverkanavstand?.median * sakerhetsfaktor).toFixed(1)}</td>
+              <td style={{ padding: '8px' }}>[m/s]</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style={{ flex: 1, maxWidth: '50%', textAlign: 'left', marginTop: '10px'}}>
+        <img
+          src={`data:image/png;base64,${medianPlotImage}`}
+          alt="Median Plot"
+          style={{ maxWidth: '100%', height: 'auto' }} // Anpassar bredden automatiskt
+        />
+      </div>
+            
+          </div>
+          </div>
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Stäng</button>
+          <button type="button" className="btn btn-primary" onClick={handlePrint}>Skriv ut</button>
+        </div>
+      </div>
+      )}
     </div>
   </div>
 

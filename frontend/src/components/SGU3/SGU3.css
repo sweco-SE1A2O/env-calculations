@@ -39,3 +39,12 @@
 .custom-radio{
     margin-right: 10px;
 }
+
+.bordered-tr{
+    border: 1px solid black;
+}
+
+.unit{
+    margin-left: 4px;
+    margin-bottom: 1px;
+}
