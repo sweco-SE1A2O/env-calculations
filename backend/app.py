@@ -24,15 +24,6 @@ def serve_frontend(path):
         return send_from_directory(os.path.join('frontend', 'build'), path)
     else:
         return send_from_directory(os.path.join('frontend', 'build'), 'index.html')
-
-# Route för att serva React-frontendens filer
-@app.route('/')
-@app.route('/<path:path>')
-def serve_frontend(path=''):
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
     
 @app.route('/api/monte_carlo', methods=['POST'])
 def monte_carlo():
