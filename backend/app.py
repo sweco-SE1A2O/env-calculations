@@ -1,11 +1,21 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from calculations import monte_carlo_simulation, create_histogram, plot_avsankning_vs_avstand, plot_median_vs_avstand
 
-app = Flask(__name__)
+# Flask-konfiguration
+app = Flask(__name__, static_folder='frontend', static_url_path='')
 CORS(app)  # Lägg till detta för att aktivera CORS
 
+# Route för att serva React-frontendens filer
+@app.route('/')
+@app.route('/<path:path>')
+def serve_frontend(path=''):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+    
 @app.route('/api/monte_carlo', methods=['POST'])
 def monte_carlo():
     data = request.get_json()
