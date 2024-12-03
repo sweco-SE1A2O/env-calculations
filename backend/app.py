@@ -9,11 +9,19 @@ CORS(app)  # Lägg till detta för att aktivera CORS
 
 # Route för att serva React-frontendens filer
 @app.route('/')
+def serve_frontend_index():
+    return send_from_directory(os.path.join('frontend', 'build'), 'index.html')
+
+# Route för att serva andra statiska filer
+@app.route('/static/<path:path>')
+def serve_static(path):
+    return send_from_directory(os.path.join('frontend', 'build', 'static'), path)
+
+# Route för att hantera andra vägar och serva Reacts index.html
 @app.route('/<path:path>')
-def serve_frontend(path=''):
-    # Försök att hitta statiska filer, annars skicka index.html
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
+def serve_frontend(path):
+    if os.path.exists(os.path.join('frontend', 'build', path)):
+        return send_from_directory(os.path.join('frontend', 'build'), path)
     else:
         return send_from_directory(os.path.join('frontend', 'build'), 'index.html')
 
