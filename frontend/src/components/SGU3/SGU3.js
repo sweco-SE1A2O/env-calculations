@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
+console.log(API_URL);
+
 const SGU3 = () => {
     const today = new Date().toISOString().split('T')[0];
 
