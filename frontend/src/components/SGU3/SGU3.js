@@ -5,9 +5,7 @@ import equationImage from '../../assets/formler.png';
 import './SGU3.css';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-
-console.log(API_URL);
+const API_URL = 'https://hydro-toolbox.onrender.com' || 'http://localhost:5000';
 
 const SGU3 = () => {
     const today = new Date().toISOString().split('T')[0];
