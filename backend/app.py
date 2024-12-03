@@ -4,8 +4,18 @@ from flask_cors import CORS
 from calculations import monte_carlo_simulation, create_histogram, plot_avsankning_vs_avstand, plot_median_vs_avstand
 
 # Flask-konfiguration
-app = Flask(__name__, static_folder='frontend', static_url_path='')
+app = Flask(__name__, static_folder=os.path.join('frontend', 'build', 'static'), static_url_path='/static')
 CORS(app)  # Lägg till detta för att aktivera CORS
+
+# Route för att serva React-frontendens filer
+@app.route('/')
+@app.route('/<path:path>')
+def serve_frontend(path=''):
+    # Försök att hitta statiska filer, annars skicka index.html
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(os.path.join('frontend', 'build'), 'index.html')
 
 # Route för att serva React-frontendens filer
 @app.route('/')
