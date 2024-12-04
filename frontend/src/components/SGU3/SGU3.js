@@ -902,7 +902,7 @@ const SGU3 = () => {
               <div style={{ display: 'inline-block', marginLeft: '10px'  }}>{today}</div>
             </div>
 
-            <img src={modelImageSummary} alt="Modell för uträkningarna" style={{ maxWidth: '70%', height: 'auto', marginTop: '20px', marginBottom: '20px' }} />
+            <img src={`data:image/png;base64,${modelImageSummary}`} alt="Modell för uträkningarna" style={{ maxWidth: '70%', height: 'auto', marginTop: '20px', marginBottom: '20px' }} />
 
             <table style={{ borderCollapse: 'collapse', width: '50%' }}>
           <tbody>
