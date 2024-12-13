@@ -816,27 +816,27 @@ const SGU3 = () => {
               <tr>
                 <th scope="row" style={{ paddingTop: '8px' }}>K</th>
                 <td style={{ padding: '8px' }}>
-                {typeof KMin === "number"
-                  ? (KMin < 0.1 ? KMin?.toExponential(1) : KMin?.toFixed(1))
+                {typeof parseFloat(KMin) === "number"
+                  ? (parseFloat(KMin) < 0.1 ? parseFloat(KMin)?.toExponential(1) : parseFloat(KMin)?.toFixed(1))
                   : "N/A"}
                 </td>
                 <td style={{ padding: '8px' }}>
-                  {(KMin + KMax) / 2 < 0.1
-                    ? ((KMin + KMax) / 2).toExponential(1)
-                    : ((KMin + KMax) / 2).toFixed(1)}
+                  {(parseFloat(KMin) + parseFloat(KMax)) / 2 < 0.1
+                    ? ((parseFloat(KMin) + parseFloat(KMax)) / 2).toExponential(1)
+                    : ((parseFloat(KMin) + parseFloat(KMax)) / 2).toFixed(1)}
                 </td>
                 <td style={{ padding: '8px' }}>
-                {typeof KMax === "number"
-                  ? (KMax < 0.1 ? KMax?.toExponential(1) : KMax?.toFixed(1))
+                {typeof parseFloat(KMax) === "number"
+                  ? (parseFloat(KMax) < 0.1 ? parseFloat(KMax)?.toExponential(1) : parseFloat(KMax)?.toFixed(1))
                   : "N/A"}
                 </td>
                 <td style={{ paddingTop: '8px' }}>m/s</td>
               </tr>
               <tr>
                 <th scope="row" style={{ paddingTop: '8px' }}>W</th>
-                <td style={{ padding: '8px' }}>{WMin}</td>
-                <td style={{ padding: '8px' }}>{(WMin + WMax)/2}</td>
-                <td style={{ padding: '8px' }}>{WMax}</td>
+                <td style={{ padding: '8px' }}>{parseFloat(WMin)}</td>
+                <td style={{ padding: '8px' }}>{(parseFloat(WMin) + parseFloat(WMax))/2}</td>
+                <td style={{ padding: '8px' }}>{parseFloat(WMax)}</td>
                 <td style={{ paddingTop: '8px'}}>mm/år</td>
               </tr>
             </tbody>
