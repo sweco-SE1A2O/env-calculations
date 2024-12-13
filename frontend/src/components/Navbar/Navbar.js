@@ -26,7 +26,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
                                             <li className="nav-item dropdown">
                                                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modeller</a>
                                                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                                    <a className="dropdown-item" href="SGU3">SGU Modell 3 </a>
+                                                    <a className="dropdown-item" href="SGU3">Linjesänka </a>
                                                 </div>
                                             </li>
                                         </ul>

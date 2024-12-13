@@ -138,11 +138,12 @@ def create_histogram(results1, results2, stats1, stats2, srp_value, upper_percen
     plt.xlabel('Avstånd [m]')
     plt.ylabel('Antal')
     plt.legend()
+    plt.tight_layout()
 
 
     # Spara histogrammet som en byte-ström
     buffer = io.BytesIO()
-    plt.savefig(buffer, format='png')
+    plt.savefig(buffer, format='png', bbox_inches='tight')
     buffer.seek(0)
     base64_image = base64.b64encode(buffer.read()).decode('utf-8')
     buffer.close()
@@ -168,9 +169,9 @@ def plot_median_vs_avstand(iterations, K_min, K_max, W_min, W_max, H0_min, H0_ma
     plt.plot(median_sak_values, srp_values, 'purple', label=f'Avsänkning med säkerhetsfaktorn {sak_faktor}')
 
     plt.axhline(y=specific_srp, color='#8297B0', linestyle='--', linewidth=2, label=f'Påverkansområde = {specific_srp} m')
+    plt.title('Avstånd vs. avsänkning')
     plt.xlabel('Avstånd [m]')
     plt.ylabel('Avsänkning [m]')
-    plt.title('Avstånd vs. avsänkning')
     plt.gca().invert_yaxis()
     plt.ylim(top=0)
     plt.xlim(left=0)
