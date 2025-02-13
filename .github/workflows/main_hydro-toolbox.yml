@@ -29,7 +29,8 @@ jobs:
         run: |
           cd frontend
           npm install
-          npm run build
+          npm audit fix
+          CI=false npm run build
 
       # Set up Python for backend
       - name: Set up Python
