@@ -25,15 +25,13 @@ jobs:
           node-version: '14.x'
 
       # Install and build frontend
-      - name: Install and build frontend
+      - name: Install frontend dependencies
         run: |
           cd frontend
           npm install
+          npm run build
           npm audit fix
           CI=false npm run build
-          mkdir -p ../backend/frontend/build
-          cp -r build/* ../backend/frontend/build
-
       # Set up Python for backend
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -45,7 +43,6 @@ jobs:
         run: |
           cd backend
           pip install -r requirements.txt
-
       # Zip artifact for deployment
       - name: Zip artifact for deployment
         run: zip -r release.zip ./*
@@ -75,7 +72,7 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -87,11 +84,5 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'your-new-windows-app-service-name'
+          app-name: 'hydro-toolbox'
           slot-name: 'Production'
-          package: .
-
-      - name: Verify Deployment
-        run: |
-          echo "Deployment completed"
-          curl -I https://${{ secrets.AZURE_WEBAPP_URL }}
