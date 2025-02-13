@@ -25,12 +25,14 @@ jobs:
           node-version: '14.x'
 
       # Install and build frontend
-      - name: Install frontend dependencies
+      - name: Install and build frontend
         run: |
           cd frontend
           npm install
           npm audit fix
           CI=false npm run build
+          mkdir -p ../backend/frontend/build
+          cp -r build/* ../backend/frontend/build
 
       # Set up Python for backend
       - name: Set up Python
@@ -77,14 +79,19 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3882BB315E7346A0B655D0BBAEC7E07E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_42CC2941404B4561ADA98DA556BA6964 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6DD261D461734FD9B78F5114F95F976B }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'hydro-toolbox'
+          app-name: 'your-new-windows-app-service-name'
           slot-name: 'Production'
           package: .
+
+      - name: Verify Deployment
+        run: |
+          echo "Deployment completed"
+          curl -I https://${{ secrets.AZURE_WEBAPP_URL }}
