@@ -40,9 +40,7 @@ jobs:
       # Install backend dependencies
       - name: Install backend dependencies
         run: |
-          cd backend
           pip install -r requirements.txt
-          pip install Flask-Cors
       # Zip artifact for deployment
       - name: Zip artifact for deployment
         run: zip -r release.zip ./*
