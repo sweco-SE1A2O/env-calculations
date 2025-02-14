@@ -1,4 +1,4 @@
-flask
 numpy
 matplotlib
-flask_cors
+Flask>=2.0
+Flask-Cors>=3.0
